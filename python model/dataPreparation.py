@@ -1,5 +1,6 @@
 from matrixoperations import MatrixOperations
-import pandas
+import pandas as pd
+import numpy as np
 
 class DataPreparation:
     matrixOps = MatrixOperations()
