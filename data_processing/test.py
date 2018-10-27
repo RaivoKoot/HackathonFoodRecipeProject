@@ -1,7 +1,7 @@
 import pandas as pd
 
 recipes = pd.read_json('full_format_recipes.json')
-ingredients = pd.read_csv('../data/ingredient_info.tsv', delimiter='\t')['ingredient name']
+ingredients = pd.read_csv('../python model/data/ingredient_info.tsv', delimiter='\t')['ingredient name']
 
 matches = 0
 all = 0
