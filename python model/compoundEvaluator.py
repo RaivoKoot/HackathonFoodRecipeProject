@@ -15,23 +15,16 @@ class CompoundEvaluator:
     def __init__(self):
         pass
 
-
-    def computeUniquenesses(self, foodData):
-        ingredients = foodData.ingredientDataSet
-        compounds = foodData.compoundDataSet
-        matches = foodData.ingredientsCompoundsDataSet
-
     # FINISHED
     # compute the inverse document frequency for every compound and
     # save it in foodData.documentFrequencyCompounds
     def computeIDF(self, foodData):
-        compounds =  foodData.compoundDataSet
-        matches = foodData.ingredientsCompoundsDataSet
         frequencies = foodData.documentFrequencyCompounds
+        compoundIDLists = self.getCompoundIDLists(foodData)
 
         # only get the id colums from each dataset
-        compoundIDs = self.matrixOps.getColumnOfMatrixAsList(compounds.values, 0)
-        matchCompoundIDs = self.matrixOps.getColumnOfMatrixAsList(matches.values, 1)
+        compoundIDs = compoundIDLists[0]
+        matchCompoundIDs = compoundIDLists[1]
 
         index = 0
         for compoundID in compoundIDs:
@@ -42,7 +35,6 @@ class CompoundEvaluator:
             index += 1
 
         foodData.documentFrequencyCompounds = frequencies
-        foodData.ingredientsCompoundsDataSet = matches
 
 
     # FINISHED
@@ -67,17 +59,17 @@ class CompoundEvaluator:
         log = math.log(inverse)
         return log
 
+    # FINISHED
     # assigns the idfs to the last column of
     # ingredientsCompounds labeled uniqueness
     def assignUniquenesses(self, foodData):
-        matches = foodData.ingredientsCompoundsDataSet
         frequencies = foodData.documentFrequencyCompounds
-        compounds = foodData.compoundDataSet
-
+        matches = foodData.ingredientsCompoundsDataSet
+        compoundIDLists = self.getCompoundIDLists(foodData)
 
         # only get the id colums from each dataset
-        compoundIDs = self.matrixOps.getColumnOfMatrixAsList(compounds.values, 0)
-        matchCompoundIDs = self.matrixOps.getColumnOfMatrixAsList(matches.values, 1)
+        compoundIDs = compoundIDLists[0]
+        matchCompoundIDs = compoundIDLists[1]
 
         #matches.at[index, 'Uniqueness'] =  count
         frequencyIndex = 0
@@ -91,4 +83,15 @@ class CompoundEvaluator:
                     matches.at[matchesIndex, 'Uniqueness'] =  frequency
                 matchesIndex += 1
 
-        print(matches)
+    # get the column with compound ids from each two datasets
+    def getCompoundIDLists(self, foodData):
+        matches = foodData.ingredientsCompoundsDataSet
+        compounds = foodData.compoundDataSet
+
+
+        # only get the compound id colums from each dataset
+        compoundIDs = self.matrixOps.getColumnOfMatrixAsList(compounds.values, 0)
+        matchCompoundIDs = self.matrixOps.getColumnOfMatrixAsList(matches.values, 1)
+
+        idLists = [compoundIDs, matchCompoundIDs]
+        return idLists
