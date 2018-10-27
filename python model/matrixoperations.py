@@ -21,12 +21,13 @@ class MatrixOperations:
     def getTranspose(self,matrix):
         return matrix.T
 
-    def scanDataFrameFromFile(self,fileName):
+    def importDataFromFile(self,fileName):
         data = pandas.read_table(fileName)
         return data
 
     def importDataFromJSON(self, fileName):
-        return pandas.read_json(fileName)    
+        print(fileName)
+        return pandas.read_json(fileName)
 
     # removes the labesl and indices from the dataset
     # returns data as numpy matrix
@@ -67,6 +68,11 @@ class MatrixOperations:
         columnVector = matrix[:,column]
         columnVector = columnVector.reshape((columnVector.shape[0],1))
         return columnVector
+
+    # index starting at 0
+    def getColumnOfMatrixAsList(self,matrix, column):
+        columnOneDimensional = matrix[:,column]
+        return columnOneDimensional
 
     def listToVector(self, list):
         list = np.asarray(list)
