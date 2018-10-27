@@ -1,9 +1,14 @@
 import pandas as pd
 
+<<<<<<< HEAD
 def get_matching_recipes():
     recipes = pd.read_json('full_format_recipes.json')
     ingredients = pd.read_csv('../python model/data/ingredient_info.tsv', delimiter='\t')['ingredient name']
     print(list(ingredients.values))
+=======
+recipes = pd.read_json('full_format_recipes.json')
+ingredients = pd.read_csv('../python model/data/ingredient_info.tsv', delimiter='\t')['ingredient name']
+>>>>>>> c5e8435337bb3b2da5ed19e2df52741e59620ba8
 
     matching_recipes = []
 

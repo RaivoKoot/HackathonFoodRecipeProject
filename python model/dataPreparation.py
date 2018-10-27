@@ -12,6 +12,4 @@ class DataPreparation:
     # This value will later denote the uniqueness of
     # the compound in the ingredient based off of tf-idf
     def addMatchUniquenessColumn(self, foodData):
-        foodData.ingredientsCompoundsDataSet.insert(2,'Uniqueness', 0)
-
-        print(foodData.ingredientsCompoundsDataSet)
+        foodData.ingredientsCompoundsDataSet.insert(2,'Uniqueness', 0.0)
