@@ -5,24 +5,24 @@ from accounts.models import Account
 
 
 class Category(models.Model):
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 200, unique=True)
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100, unique=True)
 
 
 class Recipe(models.Model):
     author = models.ForeignKey(Account, on_delete = models.SET_NULL, null=True)
-    title = models.CharField(max_length = 200)
+    title = models.TextField()
 
     date_published = models.DateTimeField(default=timezone.now())
-    rating = models.FloatField()
+    rating = models.FloatField(null = True)
 
-    fat = models.FloatField()
-    calories = models.FloatField()
-    protein = models.FloatField()
-    sodium = models.FloatField()
+    fat = models.FloatField(null = True)
+    calories = models.FloatField(null = True)
+    protein = models.FloatField(null = True)
+    sodium = models.FloatField(null = True)
 
     categories = models.ManyToManyField(Category, through='RecipeCategory')
 
@@ -30,17 +30,12 @@ class Recipe(models.Model):
 class DetailedIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete = models.SET_NULL, null = True)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    name = models.CharField(max_length = 200)
-
-
-class InRecipe(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(DetailedIngredient, on_delete=models.CASCADE)
+    name = models.TextField()
 
 
 class Direction(models.Model):
     order = models.PositiveIntegerField(validators=[MinValueValidator(1)])
-    content = models.CharField(max_length=400)
+    content = models.TextField()
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     class Meta:
