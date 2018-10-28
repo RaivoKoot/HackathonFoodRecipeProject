@@ -12,19 +12,26 @@
       <div id="comments">
         <h2>Login</h2>
 
-        <form action="#" method="post">
+        {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        <form action="/login" method="post">
+          {% csrf_token %}
+
           <div class="">
-            <label for="name">Name <span>*</span></label>
-            <input type="text" name="name" id="name" required placeholder="Your name..">
+            <label for="name">{{ form.name.label_tag }} <span>*</span></label>
+            {{form.name}}
           </div>
           <div class="">
-            <label for="email">Email <span>*</span></label>
-            <input type="email" name="email" id="email"  required placeholder="example@abc.com">
+            <label for="password">{{ form.password.label_tag }} <span>*</span></label>
+            {{form.password}}
           </div>
+          <div class="">
+              <input type="submit" name="submit" value="Login">
+            </div>
         </form>
-        <div class="">
-            <input type="submit" name="submit" value="Login">
-          </div>
+
 
     <div class="clear"></div>
   </main>

@@ -7,5 +7,7 @@ urlpatterns = [
     path('recipes', views.recipes_list),
     path('inventory', views.inventory),
     path('recipes/<int:id>', views.recipes_detail),
+    path('inventory/add/<int:id>', views.add_to_inventory),
+    path('inventory/delete/<int:id>', views.remove_from_inventory),
 
 ]

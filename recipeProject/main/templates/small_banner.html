@@ -17,13 +17,13 @@
       </div>
       <nav id="mainav" class="fl_right">
         <ul class="clear">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/recipes">Recipes</a></li>
+          {% if user.is_authenticated %}
           <li><a href="/inventory">Inventory</a></li>
-          <li>   </li>
-          <li>              </li>
 
-          <li><a href="#">Log out <i class="fa fa-sign-out"></i></a></li>
+          <li><a href="/logout">Log out <i class="fa fa-sign-out"></i></a></li>
+          {% endif %}
         </ul>
       </nav>
       <!-- ################################################################################################ -->
@@ -35,12 +35,14 @@
       <h2 class="heading">Your guide for<br>
         <strong>cheap recipes for students</strong></h2>
       <p> get the most out of your ingredients.</p>
+      {% if not user.is_authenticated %}
       <footer>
         <ul class="nospace inline pushright">
           <li><a class="btn" href="/signup">Sign up <i class="fa fa-user-plus"></i></a></li>
           <li><a class="btn inverse" href="/login">Log in <i class="fa fa-user"></i></a></li>
         </ul>
       </footer>
+      {% endif %}
 
     </div>
   </section>

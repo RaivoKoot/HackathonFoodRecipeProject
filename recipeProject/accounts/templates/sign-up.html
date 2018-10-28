@@ -12,23 +12,25 @@
       <div id="comments">
         <h2>Sign up</h2>
 
-        <form action="#" method="post">
+        <form action="/signup" method="post">
+          {% csrf_token %}
           <div class="">
             <label for="name">Name <span>*</span></label>
-            <input type="text" name="name" id="name" required placeholder="Your name..">
+            {{form.name}}
           </div>
           <div class="">
             <label for="email">Email <span>*</span></label>
-            <input type="email" name="email" id="email"  required placeholder="example@abc.com">
+            {{form.email}}
           </div>
           <div class="">
             <label for="Password">Password</label>
-            <input type="Password" name="Password" id="Password" required placeholder="Password123">
+            {{form.password}}
           </div>
+          <div>
+              <input type="submit" name="submit" value="Sign up">
+            </div>
         </form>
-        <div>
-            <input type="submit" name="submit" value="Sign up">
-          </div>
+
     <div class="clear"></div>
   </main>
 </div>

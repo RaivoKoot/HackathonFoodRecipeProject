@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
-from accounts.models import Account
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -13,7 +13,7 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(Account, on_delete = models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
     title = models.TextField()
 
     date_published = models.DateTimeField(default=timezone.now())
@@ -47,5 +47,11 @@ class RecipeCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
-class Container(models.Model):
-    pass
+class Inventory(models.Model):
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    ingredients = models.ManyToManyField(Ingredient, through='IngredientInventory')
+
+
+class IngredientInventory(models.Model):
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)

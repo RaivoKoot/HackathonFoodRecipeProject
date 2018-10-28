@@ -424,3 +424,22 @@ article img {
 	margin: 10px auto;
 	padding: 10px;
 }
+
+#inventory_wrapper{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+}
+
+.inventory_block {
+	width: 100%;
+	margin: 20px;
+}
+
+.inventory_block form{
+	margin: 20px;
+}
+
+.large_symbol{
+	font-size: 15pt;
+}

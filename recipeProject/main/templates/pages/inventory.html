@@ -8,43 +8,42 @@
     <div class="content">
 
       </div>
-      <div id="comments">
+      <div id="inventory_wrapper">
 
-        <div id="search">
-        <form method="get" action="http://www.google.com/search">
-          <input type="text" name="q" size="31" maxlength="255" value="">
-          <input type="submit" value="Search"><br>
+        <div class="inventory_block" id="new_ingredients">
+        <form method="get">
+          <input type="text" class="search" name="search" value="{{search}}" id="search" placeholder="Use keywords">
+          <input type="submit" class="btn" value="Search"><br>
         </form>
-        <p>   </p>
-        <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-        <p>            </p>
-        <p>            </p>
-
-
-
 
         <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          {% for ingredient in ingredients %}
+          <a href="/inventory/add/{{ingredient.id}}"<li class="list-group-item">{{ingredient.name}} <span class="badge badge-primary badge-pill large_symbol">+</span></li></a>
+          {% endfor %}
+        </ul>
+        <nav>
+          <ul class="pagination">
+        {% for value in num_pages %}
+          {% if value == current_page %}
+          <li class="active"><a href="/inventory?page={{value}}&search={{search}}">{{value}}</a></li>
+          {% else %}
+          <li><a href="/inventory?page={{value}}&search={{search}}">{{value}}</a></li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+      </nav>
+      </div>
+
+        <ul class="inventory_block" class="list-group">
+          {% for ingredient in inventory.ingredients.all %}
+          <a href="/inventory/delete/{{ingredient.id}}"><li class="list-group-item">{{ingredient.name}} <span class="badge badge-primary badge-pill large_symbol">x</span></li></a>
+          {% endfor %}
         </ul>
 
-
-        <div class="one_half">
-          <input type="submit" value="Get Recipes"><br>
-        </div>
-
-
-
-        </div>
+      </div>
+      <div class="one_half">
+        <input type="submit" class="btn" value="Get Recipes"><br>
+      </div>
     <div class="clear"></div>
   </main>
 </div>
