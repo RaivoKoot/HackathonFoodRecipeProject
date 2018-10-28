@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Recipe
 from django.template import loader
 from django.http import Http404
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 
 def recipes_index(request):
 
@@ -24,3 +26,28 @@ def recipes_detail(request, id):
     context = {'recipe': recipe}
 
     return render(request, 'pages/recipe.html', context)
+
+
+def recipes_list(request):
+
+    keyword = request.GET.get('search')
+    if keyword is None:
+        keyword = ''
+
+    recipe_list = Recipe.objects.filter(title__icontains = keyword)
+    paginator = Paginator(recipe_list, 10)
+
+    page = request.GET.get('page')
+    if page is not None:
+        page = int(page)
+    recipes = paginator.get_page(page)
+    context = {'recipes': recipes,
+                'num_pages': paginator.page_range,
+                'current_page': page,
+                'search': keyword}
+
+    return render(request, 'pages/recipe_search.html', context)
+
+
+def inventory(request):
+    return render(request, 'pages/inventory.html')

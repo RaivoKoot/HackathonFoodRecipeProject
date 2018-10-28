@@ -30,7 +30,7 @@ File: Layout CSS
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
-#pageintro{padding:250px 0;}
+#pageintro{padding:100px 0; }
 
 #pageintro > div{display:block; max-width:60%;}
 #pageintro > div *{line-height:normal;}
@@ -390,6 +390,11 @@ article img {
 	padding: 10px;
 	transition: 0.3s;
 	margin: 20px;
+
+}
+
+.heading, a, .recipe_card{
+	text-decoration: none;
 }
 
 .recipe_card:hover{
@@ -405,7 +410,17 @@ article img {
 
 .category{
 	padding: 3px;
-	border: 1px solid rgba(0,0,0,0.6);
+	border: 2px solid rgba(0,0,0,0.3);
 	border-radius: 5px;
 	color: rgba(0,0,0,0.6);
+}
+
+.big_title{
+	font-size: 36pt;
+}
+
+.search {
+	width: 100%;
+	margin: 10px auto;
+	padding: 10px;
 }

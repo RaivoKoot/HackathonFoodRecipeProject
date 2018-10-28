@@ -1,0 +1,45 @@
+{% extends 'small_banner.html' %}
+{% load static %}
+{% block subcontent %}
+<div class="wrapper row3">
+  <main class="hoc container clear">
+    <div class="container">
+      <form method="get">
+        <div class="">
+          <label for="search">Search</label>
+          <input type="text" class="search" name="search" value="{{search}}" id="search" placeholder="Use keywords">
+        </div>
+        <input type="submit" class="btn" value="Search"><br>
+      </form>
+
+
+      <div class="container">
+        {% for recipe in recipes %}
+        <a href="/recipes/{{recipe.id}}">
+          <div class="recipe_card">
+          <h2>{{recipe.title}}</h2>
+          <p class="btmspace-30 subtext">{{recipe.date_published|date:"SHORT_DATE_FORMAT"}}</p>
+          <p>{% for category in recipe.categories.all %}
+          <span class="category">{{category.name}}</span>
+          {%endfor%}</p>
+          </div>
+        </a>
+          {% endfor %}
+      </div>
+
+      <nav>
+        <ul class="pagination">
+      {% for value in num_pages %}
+        {% if value == current_page %}
+        <li class="active"><a href="/recipes?page={{value}}&search={{search}}">{{value}}</a></li>
+        {% else %}
+        <li><a href="/recipes?page={{value}}&search={{search}}">{{value}}</a></li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+    </nav>
+
+    <div class="clear"></div>
+  </main>
+</div>
+{% endblock %}

@@ -5,10 +5,17 @@
 <div class="wrapper row3">
   <main class="hoc container clear">
     <div class="container">
-        <h1>{{recipe.title}}<h1>
+        <h1 class="big_title">{{recipe.title}}<h1>
         <p>
           <br>
         </p>
+
+        <div>
+          {%for category in recipe.categories.all %}
+          <span class="category">{{category.name}}</span>
+          {%endfor%}
+          </div>
+
         <h2>Ingredients</h2>
 
        <ul class="list-group">
