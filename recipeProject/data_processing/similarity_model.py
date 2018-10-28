@@ -5,9 +5,9 @@ from collections import OrderedDict
 
 
 def ingredient_compound_binary():
-    ingredient_details = pd.read_csv("../python model/data/ingredient_info.tsv", sep='\t')
-    ingredients_compouds = pd.read_csv("../python model/data/ingredients_compounds.tsv", sep='\t')
-    compound_details = pd.read_csv("../python model/data/compound_info.tsv", sep='\t')
+    ingredient_details = pd.read_csv("../../python model/data/ingredient_info.tsv", sep='\t')
+    ingredients_compouds = pd.read_csv("../../python model/data/ingredients_compounds.tsv", sep='\t')
+    compound_details = pd.read_csv("../../python model/data/compound_info.tsv", sep='\t')
 
     ingredients_compounds_joined = ingredient_details\
         .set_index("# id").join(ingredients_compouds.set_index("# ingredient id"))\

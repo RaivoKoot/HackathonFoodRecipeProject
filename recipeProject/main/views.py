@@ -5,6 +5,8 @@ from django.template import loader
 from django.http import Http404, HttpResponseRedirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
+from data_processing import similarity_model
+
 
 def recipes_index(request):
 
@@ -89,3 +91,21 @@ def add_to_inventory(request, id):
 def remove_from_inventory(request, id):
     IngredientInventory.objects.filter(inventory__owner__id = request.user.id, ingredient__id = id)[0].delete()
     return HttpResponseRedirect('/inventory')
+
+
+def get_recipe_recommendations(request):
+    inventory = Inventory.objects.get(owner__id = request.user.id)
+    matching_recipes = []
+
+    for recipe in Recipe.objects.all():
+        matching = True
+        if recipe.detailedingredient_set.count() < 1:
+            continue
+        for recipe_ingredient in recipe.detailedingredient_set.all():
+            if recipe_ingredient.ingredient not in inventory.ingredients.all():
+                matching = False
+                break
+        if matching:
+            matching_recipes.append(str(recipe.id) + " " + recipe.title + "<br>")
+
+    return HttpResponse(matching_recipes)
