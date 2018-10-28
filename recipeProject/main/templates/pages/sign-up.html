@@ -1,0 +1,36 @@
+{% extends 'small_banner.html' %}
+{% load static %}
+{% block subcontent %}
+
+<div class="wrapper row3">
+  <main class="hoc container clear">
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="content">
+
+      </div>
+      <div id="comments">
+        <h2>Sign up</h2>
+
+        <form action="#" method="post">
+          <div class="one_third first">
+            <label for="name">Name <span>*</span></label>
+            <input type="text" name="name" id="name" value="" size="22" required placeholder="Dimitar">
+          </div>
+          <div class="one_third">
+            <label for="email">Email <span>*</span></label>
+            <input type="email" name="email" id="email" value="" size="22" required placeholder="Dimi@Kitchen.com">
+          </div>
+          <div class="one_third">
+            <label for="Password">Password</label>
+            <input type="Password" name="Password" id="Password" value="" size="22" placeholder="Password123">
+          </div>
+        </form>
+        <div>
+            <input type="submit" name="submit" value="Sign up">
+          </div>
+    <div class="clear"></div>
+  </main>
+</div>
+
+{% endblock %}
