@@ -45,6 +45,10 @@ def get_recipe_ingredients_cos_similarity():
 
     transformer = TfidfTransformer()
     tfidf = transformer.fit_transform(ingredient_compounds_binary).toarray()
+
+    tfidf = pd.DataFrame.from_records(tfidf)
+    tfidf.to_csv("data/tfidf_matrix.csv")
+
     cos = cosine_similarity(tfidf)
 
     return cos
