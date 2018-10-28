@@ -12,7 +12,7 @@ class FoodData:
         self.documentFrequencyCompounds = [0] * 1107
 
         # matrix comparing ingredients with compounds
-        self.compoundMatrix = np.zeros((1533,1107))
+        self.compoundMatrix = np.zeros((1532,1107))
 
         # matrix comparing all ingredients
         self.ingredientMatrix = None
@@ -45,7 +45,7 @@ class FoodData:
 
     def exportIngredientMatrix(self):
         dataFrame = pandas.DataFrame.from_records(self.ingredientMatrix)
-        dataFrame.to_csv(path_or_buf='data\\ingredient_matrix.csv')
+        dataFrame.to_csv(path_or_buf='data\\ingredient_matrix.csv', index=False,header=False)
 
     def importIngredientsMatrix(self):
         self.ingredientMatrix = self.matrixOps.importCSVFromFile('data\\ingredient_matrix.csv')
