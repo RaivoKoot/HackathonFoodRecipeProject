@@ -1,0 +1,55 @@
+{% extends 'footer.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- Top Background Image Wrapper -->
+<div class="bgded" style="background-image:url({% static 'images/demo/backgrounds/01.png' %});">
+
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html">Dimi's Kitchen</a></h1>
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a class="drop" href="#">Recipes</a>
+            <ul>
+              <li><a href="pages/gallery.html">Gallery</a></li>
+              <li><a href="pages/full-width.html">Full Width</a></li>
+              <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
+              <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
+            </ul>
+          </li>
+          <li>   </li>
+          <li>              </li>
+
+          <li><a href="#">Log out <i class="fa fa-sign-out"></i></a></li>
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+
+  <section id="breadcrumb" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <h6 class="heading">Sign up/Login</h6>
+    <!-- ################################################################################################ -->
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Sign up</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </section>
+  <!-- ################################################################################################ -->
+</div>
+
+{% block subcontent %}
+{% endblock %}
+
+{%endblock%}

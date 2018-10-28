@@ -1,0 +1,80 @@
+{% extends 'footer.html' %}
+{% load static %}
+{% block content %}
+<!-- Top Background Image Wrapper -->
+<div class="bgded" style="background-image:url({% static 'images/demo/backgrounds/01.png' %});">
+
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html">Dimi's Kitchen</a></h1>
+      </div>
+      <!-- navbar -->
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a class="drop" href="#">Recipes</a>
+            <ul>
+              <li><a href="pages/gallery.html">Recipes</a></li>
+            </ul>
+          </li>
+          <li>   </li>
+          <li>              </li>
+
+          <li><a href="#">Log out <i class="fa fa-sign-out"></i></a></li>
+        </ul>
+      </nav>
+
+    </header>
+  </div>
+  <section id="pageintro" class="hoc clear">
+    <div>
+      <h2 class="heading">Your guide for<br>
+        <strong>cheap recipes for students</strong></h2>
+      <p> get the most out of your ingredients.</p>
+      <footer>
+        <ul class="nospace inline pushright">
+          <li><a class="btn" href="pages/sign-up.html">Sign up <i class="fa fa-user-plus"></i></a></li>
+          <li><a class="btn inverse" href="pages/Log-in.html">Log in <i class="fa fa-user"></i></a></li>
+        </ul>
+      </footer>
+
+    </div>
+  </section>
+
+</div>
+<!-- End Top Background Image Wrapper -->
+<div class="wrapper row3">
+  <main class="hoc container clear btmpad-none">
+    <!-- Recipes section-->
+
+    <div class="sectiontitle center">
+      <h2>Latest Recipes</h2>
+      <p> </p>
+    </div>
+    <ul class="nospace group center btmspace-80">
+      {% for recipe in latest_recipes%}
+      <a href="/recipes/{{recipe.id}}"><li class="one_quarter recipe_card">
+        <article>
+          <h3 class="heading">{{recipe.title}}</h3>
+          <p>{% for category in recipe.categories.all %}
+          <span class="category">{{category.name}}</span>
+          {%endfor%}</p>
+          <p class="btmspace-30 subtext">{{recipe.date_published|date:"SHORT_DATE_FORMAT"}}</p>
+          <footer class="btn">Read More &raquo;</footer>
+        </article>
+      </li></a>
+      {% endfor %}
+    </ul>
+    <!-- <figure><img src="images/demo/978x380.png" alt=""></figure> -->
+
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+
+    <div class="clear"></div>
+  </section>
+</div>
+{% endblock %}

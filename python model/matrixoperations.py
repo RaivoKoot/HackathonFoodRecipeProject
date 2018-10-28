@@ -25,6 +25,10 @@ class MatrixOperations:
         data = pandas.read_table(fileName)
         return data
 
+    def importCSVFromFile(self,fileName):
+        data = pandas.read_csv(fileName)
+        return data
+
     def importDataFromJSON(self, fileName):
         print(fileName)
         return pandas.read_json(fileName)
