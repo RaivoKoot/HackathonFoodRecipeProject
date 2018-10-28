@@ -4,6 +4,8 @@
 <div class="wrapper row3">
   <main class="hoc container clear">
     <div class="container">
+
+      {% if not hide_search %}
       <form method="get">
         <div class="">
           <label for="search">Search</label>
@@ -11,6 +13,7 @@
         </div>
         <input type="submit" class="btn" value="Search"><br>
       </form>
+      {% endif %}
 
 
       <div class="container">
@@ -31,9 +34,9 @@
         <ul class="pagination">
       {% for value in num_pages %}
         {% if value == current_page %}
-        <li class="active"><a href="/recipes?page={{value}}&search={{search}}">{{value}}</a></li>
+        <li class="active"><a href="{{pagination_url}}?page={{value}}&search={{search}}">{{value}}</a></li>
         {% else %}
-        <li><a href="/recipes?page={{value}}&search={{search}}">{{value}}</a></li>
+        <li><a href="{{pagination_url}}?page={{value}}&search={{search}}">{{value}}</a></li>
         {% endif %}
       {% endfor %}
       </ul>

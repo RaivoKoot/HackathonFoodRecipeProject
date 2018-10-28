@@ -46,7 +46,8 @@ def recipes_list(request):
     context = {'recipes': recipes,
                 'num_pages': paginator.page_range,
                 'current_page': page,
-                'search': keyword}
+                'search': keyword,
+                'pagination_url': '/recipes',}
 
     return render(request, 'pages/recipe_search.html', context)
 
@@ -94,18 +95,40 @@ def remove_from_inventory(request, id):
 
 
 def get_recipe_recommendations(request):
-    inventory = Inventory.objects.get(owner__id = request.user.id)
+    inventory_ingredients = Inventory.objects.get(owner__id = request.user.id).ingredients.values_list('name', flat = True)
     matching_recipes = []
 
     for recipe in Recipe.objects.all():
+
         matching = True
         if recipe.detailedingredient_set.count() < 1:
             continue
+
         for recipe_ingredient in recipe.detailedingredient_set.all():
-            if recipe_ingredient.ingredient not in inventory.ingredients.all():
+
+            if recipe_ingredient.ingredient.name not in inventory_ingredients:
                 matching = False
+                top_substitutes = similarity_model.get_top_replacements(recipe_ingredient.ingredient.name)
+                for substitute in list(top_substitutes.keys()):
+                    if substitute.replace('_', ' ') in inventory_ingredients:
+                        matching = True
+                        break
+            if not matching:
                 break
         if matching:
-            matching_recipes.append(str(recipe.id) + " " + recipe.title + "<br>")
+            matching_recipes.append(recipe)
 
-    return HttpResponse(matching_recipes)
+    paginator = Paginator(matching_recipes, 10)
+
+    page = request.GET.get('page')
+    if page is not None:
+        page = int(page)
+
+    recipes = paginator.get_page(page)
+
+    context = {'recipes': recipes,
+                'num_pages': paginator.page_range,
+                'current_page': page,
+                'pagination_url': '/recipes/recommendations',}
+
+    return render(request, 'pages/recipe_search.html', context)

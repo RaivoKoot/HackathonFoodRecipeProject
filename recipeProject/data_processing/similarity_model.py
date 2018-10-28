@@ -2,12 +2,15 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import OrderedDict
+import os
+
+path = os.path.dirname(__file__)
 
 
 def ingredient_compound_binary():
-    ingredient_details = pd.read_csv("../../python model/data/ingredient_info.tsv", sep='\t')
-    ingredients_compouds = pd.read_csv("../../python model/data/ingredients_compounds.tsv", sep='\t')
-    compound_details = pd.read_csv("../../python model/data/compound_info.tsv", sep='\t')
+    ingredient_details = pd.read_csv(os.path.join(path, "../../python model/data/ingredient_info.tsv"), sep='\t')
+    ingredients_compouds = pd.read_csv(os.path.join(path,"../../python model/data/ingredients_compounds.tsv"), sep='\t')
+    compound_details = pd.read_csv(os.path.join(path,"../../python model/data/compound_info.tsv"), sep='\t')
 
     ingredients_compounds_joined = ingredient_details\
         .set_index("# id").join(ingredients_compouds.set_index("# ingredient id"))\
@@ -17,7 +20,7 @@ def ingredient_compound_binary():
     compound_names = ingredients_compounds_joined[['Compound name']].drop_duplicates()
     ingredient_names = ingredients_compounds_joined[['ingredient name']].drop_duplicates()
 
-    ingredient_names.to_pickle("data/ingredient_names.pkl")
+    ingredient_names.to_pickle(os.path.join(path,"data/ingredient_names.pkl"))
 
     compounds = compound_names.values[:,0]
     ingredients = ingredient_names.values[:,0]
@@ -33,12 +36,12 @@ def ingredient_compound_binary():
         compounds_binary = ([1 if compound in ingredient_compoud else 0 for compound in compounds])
         ingredient_compounds_binary.append(compounds_binary)
 
-    pd.DataFrame(ingredient_compounds_binary).to_pickle("data/ingredient_compounds_binary.pkl")
+    pd.DataFrame(ingredient_compounds_binary).to_pickle(os.path.join(path,"data/ingredient_compounds_binary.pkl"))
 
 
 def get_recipe_ingredients_cos_similarity():
 
-    ingredient_compounds_binary = pd.read_pickle("data/ingredient_compounds_binary.pkl")
+    ingredient_compounds_binary = pd.read_pickle(os.path.join(path,"data/ingredient_compounds_binary.pkl"))
 
     transformer = TfidfTransformer()
     tfidf = transformer.fit_transform(ingredient_compounds_binary).toarray()
@@ -54,17 +57,22 @@ def save_cos_similarities_to_pkl():
     """
 
     cos_compounds = pd.DataFrame(get_recipe_ingredients_cos_similarity())
-    ingredient_names = pd.read_pickle("data/ingredient_names.pkl")
+    ingredient_names = pd.read_pickle(os.path.join(path,"data/ingredient_names.pkl"))
 
     cos_compounds.columns = ingredient_names.values[:, 0]
     cos_compounds.index = ingredient_names.values[:, 0]
 
-    cos_compounds.to_pickle("data/cos_compounds.pkl")
+    cos_compounds.to_pickle(os.path.join(path,"data/cos_compounds.pkl"))
 
 
 def get_top_replacements(ingredient_name: str, top_n: int = 5):
 
-    cos_compounds = pd.read_pickle("data/cos_compounds.pkl")[ingredient_name]
+    ingredient_name = ingredient_name.replace(' ', '_')
+    cos_compounds = None
+    try:
+        cos_compounds = pd.read_pickle(os.path.join(path,"data/cos_compounds.pkl"))[ingredient_name]
+    except:
+        return {}
 
     d_descending = OrderedDict(sorted(cos_compounds.items(), key=lambda kv: kv[1], reverse=True))
 
