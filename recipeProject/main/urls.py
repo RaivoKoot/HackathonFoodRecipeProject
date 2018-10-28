@@ -10,5 +10,6 @@ urlpatterns = [
     path('recipes/recommendations', views.get_recipe_recommendations),
     path('inventory/add/<int:id>', views.add_to_inventory),
     path('inventory/delete/<int:id>', views.remove_from_inventory),
+    path('ingredients/<str:name>/substitutes', views.recipe_substitutes),
 
 ]

@@ -4,6 +4,7 @@ from .models import Recipe, Ingredient, Inventory, IngredientInventory
 from django.template import loader
 from django.http import Http404, HttpResponseRedirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+import json
 
 from data_processing import similarity_model
 
@@ -28,6 +29,12 @@ def recipes_detail(request, id):
     context = {'recipe': recipe}
 
     return render(request, 'pages/recipe.html', context)
+
+
+def recipe_substitutes(request, name):
+    top_substitutes = similarity_model.get_top_replacements(name)
+
+    return HttpResponse(json.dumps(top_substitutes, ensure_ascii=True))
 
 
 def recipes_list(request):

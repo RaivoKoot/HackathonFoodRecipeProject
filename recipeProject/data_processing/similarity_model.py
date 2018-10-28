@@ -69,7 +69,7 @@ def save_cos_similarities_to_pkl():
     cos_compounds.to_pickle(os.path.join(path,"data/cos_compounds.pkl"))
 
 
-def get_top_replacements(ingredient_name: str, top_n: int = 5):
+def get_top_replacements(ingredient_name: str, threshold: float = 0.5):
 
     ingredient_name = ingredient_name.replace(' ', '_')
     cos_compounds = None
@@ -82,10 +82,8 @@ def get_top_replacements(ingredient_name: str, top_n: int = 5):
 
     result = {}
 
-    i = 0
     for k, v in d_descending.items():
-        i += 1
-        if (i > top_n + 1):
+        if (v < threshold):
             break
         if (k != ingredient_name):
             result[k] = v
